@@ -1,10 +1,10 @@
 [package]
 name = "seqsplitter"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Steven Weaver <steven@stevenweaver.org>"]
 edition = "2018"
 license = "MIT"
-description = "Calculates per-read and total sequence complexity from FastQ file."
+description = "Parses fasta records based on list of either header names or regexes"
 repository = "https://github.com/stevenweaver/seqsplitter"
 homepage = "https://stevenweaver.org"
 keywords = ["fastq"]
