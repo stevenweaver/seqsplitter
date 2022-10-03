@@ -6,7 +6,6 @@ use regex::RegexSet;
 use std::io;
 use bio::io::fasta;
 
-
 // REGEX Option
 pub fn regex_match<P: AsRef<Path> + AsRef<OsStr>>(filename: P, list: P, assume_unique:bool) -> bool {
 
@@ -15,12 +14,10 @@ pub fn regex_match<P: AsRef<Path> + AsRef<OsStr>>(filename: P, list: P, assume_u
     let mut records = fasta::Reader::from_file(file).unwrap().records();
     let mut writer = fasta::Writer::new(io::stdout());
 
-
     // Search items
     let search_ids_to_parse = fs::read_to_string(list).expect("Something went wrong reading the file");
     let mut search_id_vector: Vec<&str> = search_ids_to_parse.split('\n').into_iter().filter(|id|!id.is_empty()).collect();
     let id_regex_set = RegexSet::new(&search_id_vector).unwrap();
-
 
     // Gather data from every record
     while let Some(record) = records.next() {
@@ -58,6 +55,7 @@ pub fn string_match<P: AsRef<Path> + AsRef<OsStr>>(filename: P, list:P, assume_u
     let mut records = fasta::Reader::from_file(file).unwrap().records();
     let mut writer = fasta::Writer::new(io::stdout());
 
+
     // Search items
     let search_ids_to_parse = fs::read_to_string(list).expect("Something went wrong reading the file");
     let mut search_id_vector: Vec<&str> = search_ids_to_parse.split('\n').into_iter().filter(|id|!id.is_empty()).collect();
@@ -66,8 +64,17 @@ pub fn string_match<P: AsRef<Path> + AsRef<OsStr>>(filename: P, list:P, assume_u
     while let Some(record) = records.next() {
 
         let seqrec = record.unwrap();
+
+        // Need to concatenate the description and header
+
         let sequence_id_bytes = seqrec.id();
-        let matches: bool = search_id_vector.iter().any(|&x| x == sequence_id_bytes);
+        let sequence_description_bytes = seqrec.desc().unwrap_or("");
+
+        let entire_header = [sequence_id_bytes, sequence_description_bytes].join(" ");
+
+        println!("{0}", entire_header);
+
+        let matches: bool = search_id_vector.iter().any(|&x| x == entire_header);
 
         // if match add seqrec to vector
         if matches == true {
