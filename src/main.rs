@@ -15,7 +15,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                 .required(true)
                 .short('f')
                 .long("fasta"),
-
         )
         .arg(
             Arg::new("list")
@@ -24,7 +23,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                 .required(true)
                 .short('l')
                 .long("list"),
-
         )
         .arg(
             Arg::with_name("regex")
@@ -44,5 +42,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         )
         .get_matches();
 
-    crate::process::process(matches.value_of("fasta").unwrap(), matches.value_of("list").unwrap(), matches.is_present("regex"), matches.is_present("assume_unique"))
+    crate::process::process(
+        matches.value_of("fasta").unwrap(),
+        matches.value_of("list").unwrap(),
+        matches.is_present("regex"),
+        matches.is_present("assume_unique"),
+    )
 }
