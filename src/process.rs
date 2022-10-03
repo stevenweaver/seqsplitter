@@ -83,8 +83,8 @@ pub fn string_match<P: AsRef<Path> + AsRef<OsStr>>(
         let sequence_id_bytes = seqrec.id();
         let sequence_description_bytes = seqrec.desc().unwrap_or("");
 
-        let entire_header = [sequence_id_bytes, sequence_description_bytes].join(" ");
-
+        let entire_header_raw = [sequence_id_bytes, sequence_description_bytes].join(" ");
+        let entire_header = entire_header_raw.trim();
         //println!("{0}", entire_header);
 
         let matches: bool = search_id_vector.iter().any(|&x| x == entire_header);
@@ -94,12 +94,12 @@ pub fn string_match<P: AsRef<Path> + AsRef<OsStr>>(
             // Write to FASTA file
             // writer.write("random", None, seq.as_slice()).expect("Error writing record.");
             writer
-                .write(sequence_id_bytes, None, seqrec.seq())
+                .write(&entire_header, None, seqrec.seq())
                 .expect("Error writing record.");
 
             // If assume_unique is turned on, remove search id from vector and exit if empty
             if assume_unique == true {
-                search_id_vector.retain(|&x| x != sequence_id_bytes);
+                search_id_vector.retain(|&x| x != entire_header);
                 if search_id_vector.len() == 0 {
                     return true;
                 }
