@@ -85,7 +85,7 @@ pub fn string_match<P: AsRef<Path> + AsRef<OsStr>>(
 
         let entire_header = [sequence_id_bytes, sequence_description_bytes].join(" ");
 
-        println!("{0}", entire_header);
+        //println!("{0}", entire_header);
 
         let matches: bool = search_id_vector.iter().any(|&x| x == entire_header);
 
