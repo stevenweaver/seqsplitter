@@ -7,7 +7,7 @@ license = "MIT"
 description = "Parses fasta records based on list of either header names or regexes"
 repository = "https://github.com/stevenweaver/seqsplitter"
 homepage = "https://stevenweaver.org"
-keywords = ["fastq"]
+keywords = ["fastq", "fasta"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
