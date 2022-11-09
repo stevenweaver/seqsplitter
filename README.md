@@ -23,3 +23,4 @@ Arguments:
 | -r --regex         |	false       |Interpret list as regex
 | -u --assume_unique |	false       |Assume list is unique and exit when all seqs in list are found
 | -v --version       |	-           |Print version information
+# seqdupes
